@@ -4,9 +4,9 @@ Online game store for JavaScript games.
 
 PROJECT PLAN (to be updated)
 
-Members:
-Van Chau            585392
-Minna Laitinen      561578
+Members:<br/>
+Van Chau            585392<br/>
+Minna Laitinen      561578<br/>
 Minna Seppälä       564177
     
 
