@@ -14,6 +14,7 @@ class Game(models.Model):
     developerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     published_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    url = models.URLField()
 
 class Purchase(models.Model):
     playerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
