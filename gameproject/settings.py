@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gamestore.apps.GamestoreConfig'
+    'gamestore'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'gamestore.User'
 
 ROOT_URLCONF = 'gameproject.urls'
 

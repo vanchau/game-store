@@ -4,8 +4,7 @@ from django.conf import settings
 
 # All users are players, but players can also be developers
 class User(AbstractUser):
-    bio = models.TextField(max_length=500, blank=True)
-    is_developer = models.BooleanField()
+    pass
     # username provided as default attribute in django
 
 class Developer(models.Model):
