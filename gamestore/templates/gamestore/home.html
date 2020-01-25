@@ -55,20 +55,21 @@
         <div class="container">
           <div class="row">
             {% for game in game_list %}
-            <a class="col-md-4 popout" href="/games/{{game.id}}" style="text-decoration: none;">
-                <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <h4 class="card-text">{{game.title}}</h4>
-                      </div>
-                      <div>
-                        <p class="text-muted">{{game.price}} eur</p>
-                      </div>
+            <a class="col-md-4 popout" href="/games/{{game.id}}" style="text-decoration: none; color: inherit;">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h4 class="card-text">{{game.title}}</h4>
+                    </div>
+                    <div>
+                      <p class="text-muted">{{game.price}} eur</p>
                     </div>
                   </div>
+                  <p class="card-text">{{game.info_text}}</p>
                 </div>
+              </div>
             </a>
             {% endfor %}
           </div>
