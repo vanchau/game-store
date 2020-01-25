@@ -2,35 +2,26 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-# All users are players, but players can also be developers
+# Player & Developer
+# Username provided as default attribute in django
 class User(AbstractUser):
     pass
-    # username provided as default attribute in django
-
-class Developer(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
 
 class Game(models.Model):
-    developer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=30)
     price = models.PositiveSmallIntegerField(editable=True)
-    on_sale = models.BooleanField()
-    url = models.URLField()
-    scores = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    info_text = models.CharField(max_length=30)
+    developerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    published_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Purchase(models.Model):
-    player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    #game_id = ... # given automatically for each model as a primary key "id"
+    playerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    gameID = models.ForeignKey(Game, on_delete=models.CASCADE)
     purchased_time = models.DateTimeField(auto_now_add=True)
-    price_paid = models.PositiveSmallIntegerField(editable=False)
 
-class SavedGame(models.Model):
-    player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    play_data = models.CharField(max_length=100)
-    
-    def create(self, title):
-        saved_data = self.player_data=title
-        # do something with the book
-        return saved_data
+class Score(models.Model):
+    playerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    gameID = models.ForeignKey(Game, on_delete=models.CASCADE)
+    play_time = models.DateTimeField(auto_now_add=True)
+    score = models.IntegerField(editable=False)
