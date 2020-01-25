@@ -1,0 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.popout {
+  transition: transform .2s;
+}
+
+.popout:hover {
+  transform: scale(1.05)
+}
+

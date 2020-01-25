@@ -5,8 +5,13 @@ from django.views.generic import (View,TemplateView,
                                 UpdateView)
 from . import models
 
-def index(request):
-   return render(request, "gamestore/home.html", {})
+class HomeView(ListView):
+   model = models.Game
+   template_name = 'gamestore/home.html'
+
+class GameView(DetailView):
+   model = models.Game
+   template_name = 'gamestore/game.html'
 
 class GameListView(ListView):
-    model = models.Game
+   model = models.Game

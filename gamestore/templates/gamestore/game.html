@@ -1,17 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Online game store for JavaScript games">
     <title>Game Store</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css' %}">
   </head>
   <body>
+    {% load static %}
     <header>
       <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
@@ -27,7 +25,7 @@
       </div>
       <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand d-flex align-items-center">
+          <a href="/" class="navbar-brand d-flex align-items-center">
             <img src="{% static 'gamestore/img/placeholder1.png' %}" width="20" height="20" ></img>
             <strong>Game Store</strong>
           </a>
@@ -39,40 +37,15 @@
     </header>
 
     <main role="main">
-
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Game Store</h1>
-          <p class="lead text-muted">Online game store for JavaScript games - Buy and play games online!</p>
-          <p>
-            <a href="#browse" class="btn btn-primary my-2">Browse games</a>
-            <a href="#" class="btn btn-secondary my-2">High scores</a>
-          </p>
+      
+      <div class="container" style="min-height: 85vh;">
+        <div class="row pt-5 px-4">
+          <h3>{{game.title}}</h3>
         </div>
-      </section>
-
-      <div class="album py-5 bg-light" id="browse">
-        <div class="container">
-          <div class="row">
-            {% for game in game_list %}
-            <a class="col-md-4 popout" href="/{{game.id}}" style="text-decoration: none;">
-                <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <h4 class="card-text">{{game.title}}</h4>
-                      </div>
-                      <div>
-                        <p class="text-muted">{{game.price}} eur</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </a>
-            {% endfor %}
-          </div>
+        <div class="row pt-2 pl-4 w-100">
+          <iframe src="{{game.url}}" style="height: 50vh; width: 100vw;"></iframe>
         </div>
+        
       </div>
     </main>
 
