@@ -8,19 +8,19 @@
   <div class="row px-4">
     <p>by {{ game.publisher.username }}</p>
   </div>
+  <div class="row px-4">
+    <p>Game description: {{ game.description }}</p>
+  </div>
+  <div class="row pt-2 pl-4 w-100">
+    <iframe src="{{ game.url }}" style="height: 50vh; width: 180vw;"></iframe>
+  </div>
   <div>
     {% if user.is_authenticated and game.publisher == user and not hide_delete %}
       <a href="{% url 'games:delete' pk=game.pk %}" title="delete" class="btn btn-simple">
         <span class="fa fa-remove text-danger" aria-hidden="true"></span>
-        <span class="text-danger icon-label">Delete</span>
+        <span class="text-danger icon-label">Delete game</span>
       </a>
     {% endif %}
-  </div>
-  <div class="row pt-2 pl-4 w-100">
-    <iframe src="{{ game.url }}" style="height: 50vh; width: 100vw;"></iframe>
-  </div>
-  <div class="row pt-5 px-4">
-    <p>description: {{ game.description }}</p>
   </div>
 </div>
 {% endblock %}
