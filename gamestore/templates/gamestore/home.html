@@ -1,96 +1,44 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Online game store for JavaScript games">
-    <title>Game Store</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'gamestore/style.css' %}">
-  </head>
-  <body>
-    <header>
-      <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4 py-4">
-              <h4 class="text-white">Sign in</h4>
-              <input type="email" class="form-control" id="email" placeholder="Enter email">
-              <input type="password" class="form-control" id="password" placeholder="Enter password">
-              <button type="submit" class="btn btn-primary">Sign in</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand d-flex align-items-center">
-            <img src="{% static 'gamestore/img/placeholder1.png' %}" width="20" height="20" ></img>
-            <strong>Game Store</strong>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </div>
-    </header>
+{% extends "base.html" %}
 
-    <main role="main">
+{# at the terminal, run pip install django-bootstrap4 #}
+{% load bootstrap4 %}
 
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Game Store</h1>
-          <p class="lead text-muted">Online game store for JavaScript games - Buy and play games online!</p>
-          <p>
-            <a href="#browse" class="btn btn-primary my-2">Browse games</a>
-            <a href="#" class="btn btn-secondary my-2">High scores</a>
-          </p>
-        </div>
-      </section>
+{% block content %}
+<div>
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Welcome!</h1>
+      <p class="lead text-muted">This is an online game store for JavaScript games. Purchase games or upload your own!</p>
+      <p>
+        <a href="#browse" class="btn btn-primary my-2">Browse games</a>
+        <a href="#" class="btn btn-secondary my-2">High scores</a>
+      </p>
+    </div>
+  </section>
 
-      <div class="album py-5 bg-light" id="browse">
-        <div class="container">
-          <div class="row">
-            {% for game in game_list %}
-            <a class="col-md-4 popout" href="/games/{{game.id}}" style="text-decoration: none; color: inherit;">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h4 class="card-text">{{game.title}}</h4>
-                    </div>
-                    <div>
-                      <p class="text-muted">{{game.price}} eur</p>
-                    </div>
-                  </div>
-                  <p class="card-text">{{game.info_text}}</p>
+  <div class="album py-5" id="browse">
+    <div class="container">
+      <div class="row">
+        {% for game in game_list %}
+        <a class="col-md-4 popout" href="/games/{{ game.id }}" style="text-decoration: none; color: inherit;">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="static/gamestore/img/placeholder.jpg" alt="Card image cap">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="card-text">{{ game.title }}</h4>
+                </div>
+                <div>
+                  <p class="text-muted">{{ game.price }} eur</p>
                 </div>
               </div>
-            </a>
-            {% endfor %}
+              <p class="card-text">{{ game.info_text }}</p>
+            </div>
           </div>
-        </div>
+        </a>
+        {% endfor %}
       </div>
-    </main>
-
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>Footer text ...</p>
-      </div>
-    </footer>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-</html>
+    </div>
+  </div>
+</div>>
+{% endblock %}
