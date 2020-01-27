@@ -1,68 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Online game store for JavaScript games">
-    <title>Game Store</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  </head>
-  <body>
-    {% load static %}
-    <header>
-      <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4 py-4">
-              <h4 class="text-white">Sign in</h4>
-              <input type="email" class="form-control" id="email" placeholder="Enter email">
-              <input type="password" class="form-control" id="password" placeholder="Enter password">
-              <button type="submit" class="btn btn-primary">Sign in</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-          <a href="/" class="navbar-brand d-flex align-items-center">
-            <img src="{% static 'gamestore/img/placeholder1.png' %}" width="20" height="20" ></img>
-            <strong>Game Store</strong>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </div>
-    </header>
+{% extends "base.html" %}
 
-    <main role="main">
-      
-      <div class="container" style="min-height: 85vh;">
-        <div class="row pt-5 px-4">
-          <h3>{{game.title}}</h3>
-        </div>
-        <div class="row pt-2 pl-4 w-100">
-          <iframe src="{{game.url}}" style="height: 50vh; width: 100vw;"></iframe>
-        </div>
-        
-      </div>
-    </main>
-
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>Footer text ...</p>
-      </div>
-    </footer>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% block content %}
+<div class="container" style="min-height: 85vh;">
+  <div class="row pt-5 px-4">
+    <h3>{{ game.title }}</h3>
+  </div>
+  <div class="row pt-2 pl-4 w-100">
+    <iframe src="{{ game.url }}" style="height: 50vh; width: 100vw;"></iframe>
+  </div>
+</div>
+{% endblock %}
