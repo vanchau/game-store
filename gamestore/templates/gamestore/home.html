@@ -13,6 +13,10 @@
       <p>
         <a href="#browse" class="btn btn-primary my-2">Browse games</a>
         <a href="#" class="btn btn-secondary my-2">High scores</a>
+        {% if user.is_authenticated %}
+        <a class="btn btn-secondary my-2" href="#" class="btn btn-simple">My Games</a>
+        <a class="btn btn-secondary my-2" href="#" class="btn btn-simple">Inventory</a>
+        {% endif %}
       </p>
     </div>
   </section>

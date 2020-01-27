@@ -17,6 +17,16 @@ class GameView(DetailView):
    model = models.Game
    template_name = 'gamestore/game.html'
 
+class PublishGame(LoginRequiredMixin, CreateView):
+   fields = ('title', 'price', 'description', 'url')
+   model = models.Game
+
+   def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.publisher = self.request.user
+      self.object.save()
+      return super().form_valid(form)
+
 class DeleteGame(LoginRequiredMixin, SelectRelatedMixin, DeleteView):
    model = models.Game
    success_url = reverse_lazy("games:home")

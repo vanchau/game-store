@@ -1,0 +1,14 @@
+{% extends "gamestore/game_base.html" %}
+
+{% load bootstrap4 %}
+
+{% block game_content %}
+<h4>Publish New Game</h4>
+<form method="POST" action="{% url 'games:publish' %}" id="postGame">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<button type="submit" class="btn btn-primary btn-large">Publish</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

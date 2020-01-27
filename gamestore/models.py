@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -12,6 +13,14 @@ class Game(models.Model):
     published_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     url = models.URLField()
+
+    def get_absolute_url(self):
+        return reverse(
+            "games:game",
+            kwargs={
+                "pk": self.pk
+            }
+        )
 
 class Purchase(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
