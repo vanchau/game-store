@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {# at the terminal, run pip install django-bootstrap4 #}
 {% load bootstrap4 %}
@@ -22,7 +23,7 @@
         {% for game in game_list %}
         <a class="col-md-4 popout" href="/games/{{ game.id }}" style="text-decoration: none; color: inherit;">
           <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="static/gamestore/img/placeholder.jpg" alt="Card image cap">
+            <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>

@@ -12,6 +12,3 @@ class HomeView(ListView):
 class GameView(DetailView):
    model = models.Game
    template_name = 'gamestore/game.html'
-
-class GameListView(ListView):
-   model = models.Game
