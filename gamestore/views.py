@@ -9,6 +9,9 @@ from . import models
 # pip install django-braces
 from braces.views import SelectRelatedMixin
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 class HomeView(ListView):
    model = models.Game
    template_name = 'gamestore/home.html'
@@ -16,6 +19,25 @@ class HomeView(ListView):
 class GameView(DetailView):
    model = models.Game
    template_name = 'gamestore/game.html'
+
+class UserInventory(ListView):
+   model = models.Game
+   template_name = "gamestore/inventory.html"
+
+   def get_queryset(self):
+      try:
+         self.game_publisher = User.objects.prefetch_related("games",).get(
+               username__iexact=self.kwargs.get("username")
+         )
+      except User.DoesNotExist:
+         raise Http404
+      else:
+         return self.game_publisher.games.all().filter(publisher_id=self.request.user.id)
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["game_publisher"] = self.game_publisher
+      return context
 
 class PublishGame(LoginRequiredMixin, CreateView):
    fields = ('title', 'price', 'description', 'url')

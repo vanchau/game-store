@@ -9,7 +9,7 @@ class Game(models.Model):
     title = models.CharField(max_length=30)
     price = models.PositiveSmallIntegerField(editable=True)
     description = models.CharField(max_length=200)
-    publisher = models.ForeignKey(User, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(User, related_name="games", on_delete=models.CASCADE)
     published_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     url = models.URLField()
