@@ -19,5 +19,6 @@ from gamestore import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include("accounts.urls", namespace="accounts")),
     path('', include('gamestore.urls'))
 ]

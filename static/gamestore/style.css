@@ -2,6 +2,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.mycontent {
+  padding-top: 30px;
+}
+
 .popout {
   transition: transform .2s;
 }
