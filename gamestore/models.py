@@ -15,12 +15,7 @@ class Game(models.Model):
     url = models.URLField()
 
     def get_absolute_url(self):
-        return reverse(
-            "games:game",
-            kwargs={
-                "pk": self.pk
-            }
-        )
+        return reverse("games:game", kwargs={ "pk": self.pk })
 
 class Purchase(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)

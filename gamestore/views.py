@@ -27,7 +27,7 @@ class UserInventory(ListView):
    def get_queryset(self):
       try:
          self.game_publisher = User.objects.prefetch_related("games",).get(
-               username__iexact=self.kwargs.get("username")
+            username__iexact=self.request.user.username
          )
       except User.DoesNotExist:
          raise Http404
@@ -36,8 +36,17 @@ class UserInventory(ListView):
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
+      # add publisher into the context so that it can be used in the template
       context["game_publisher"] = self.game_publisher
       return context
+
+class PurchasedGames(ListView):
+   model = models.Purchase
+   template_name = 'gamestore/my_games.html'
+
+   def get_queryset(self):
+      queryset = self.model.objects.filter(player=self.request.user).select_related('game')
+      return queryset
 
 class PublishGame(LoginRequiredMixin, CreateView):
    fields = ('title', 'price', 'description', 'url')
