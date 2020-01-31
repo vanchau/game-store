@@ -1,0 +1,25 @@
+{% extends "gamestore/game_base.html" %}
+{% load bootstrap4 %}
+
+{% block game_content %}
+<h3>You're one step away from buying the game!</h3>
+<form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="pid" value="payment1">
+  <input type="hidden" name="sid" value="l1YLtkV4YW1wbGU=">
+  <input type="hidden" name="amount" value={{ game.price }}>
+  <input type="hidden" name="success_url" value="http://localhost:8000/payment/success">
+  <input type="hidden" name="cancel_url" value="http://localhost:8000/payment/cancel">
+  <input type="hidden" name="error_url" value="http://localhost:8000/payment/error">
+  <input type="hidden" name="checksum"value="4dcd406dca0a2fe61f38db186299f30d">
+
+  <div style="padding: 2em 0">
+    <h5>Amount to be paid:</h5>
+    <h4 style="font-weight: bold,">{{ game.price }}€</h4>
+  </div>
+
+  {% buttons %}
+    <button type="submit" class="btn btn-primary btn-large">Buy</button>
+  {% endbuttons %}
+</form>
+{% endblock %}
