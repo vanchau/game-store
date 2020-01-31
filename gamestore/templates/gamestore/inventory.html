@@ -41,7 +41,7 @@
           </div>
         </a>
       {% endfor %}
-      {% if user.is_authenticated and game.publisher == user and not hide_delete %}
+      {% if user.is_authenticated and game.publisher == user %}
         <a href="{% url 'games:delete' pk=game.pk %}" title="delete" class="btn btn-simple">
           <span class="fa fa-remove text-danger" aria-hidden="true"></span>
           <span class="text-danger icon-label">Delete game</span>
