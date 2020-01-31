@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import (View, TemplateView, ListView, DetailView,
-                                 CreateView, DeleteView, UpdateView)
+                                 CreateView, DeleteView, UpdateView, FormView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
@@ -70,3 +70,11 @@ class DeleteGame(LoginRequiredMixin, SelectRelatedMixin, DeleteView):
    def delete(self, *args, **kwargs):
       messages.success(self.request, "Game Deleted")
       return super().delete(*args, **kwargs)
+
+class PurchaseGame(LoginRequiredMixin, TemplateView):
+   template_name = 'gamestore/purchase_form.html'
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context['game'] = models.Game.objects.get(id=self.kwargs['game_id'])
+      return context
