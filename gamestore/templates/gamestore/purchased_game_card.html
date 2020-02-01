@@ -1,6 +1,6 @@
 {% load static %}
 
-<a class="col-md-4 popout" href="{% url 'games:game' game_id=purchase.game.pk %}" style="text-decoration: none; color: inherit;">
+<a class="col-md-4 popout" href="{% url 'games:game' pk=purchase.game.pk %}" style="text-decoration: none; color: inherit;">
   <div class="card mb-4 box-shadow">
     <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
     <div class="card-body">
