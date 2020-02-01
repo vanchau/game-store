@@ -6,7 +6,7 @@
 <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="POST">
   {% csrf_token %}
   <input type="hidden" name="pid" value="payment1">
-  <input type="hidden" name="sid" value="l1YLtkV4YW1wbGU=">
+  <input type="hidden" name="sid" value="lwUGtWdhbWVzY29wZQ==">
   <input type="hidden" name="amount" value={{ game.price }}>
   <input type="hidden" name="success_url" value="http://localhost:8000/payment/success">
   <input type="hidden" name="cancel_url" value="http://localhost:8000/payment/cancel">
