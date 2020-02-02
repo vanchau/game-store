@@ -5,14 +5,14 @@
 {% block pregame %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h1 class="jumbotron-heading">{{ game_publisher }}'s inventory</h1>
-    <p class="lead text-muted">Here you can manage your games!</p>
+    <h1 class="jumbotron-heading">My inventory</h1>
+    <p class="lead text-muted">Here you can manage the games you've published!</p>
     <p>
       <a href="{% url 'games:home' %}" class="btn btn-secondary my-2">Browse games</a>
       <a href="#" class="btn btn-secondary my-2">High scores</a>
       {% if user.is_authenticated %}
-      <a class="btn btn-secondary my-2" href="{% url 'games:purchased' %}" class="btn btn-simple">My games</a>
-      <a class="btn btn-primary my-2" href="{% url 'games:inventory' %}" class="btn btn-simple">Inventory</a>
+      <a class="btn btn-secondary my-2" href="{% url 'games:purchased' %}" class="btn btn-simple">Play games</a>
+      <a class="btn btn-primary my-2" href="{% url 'games:inventory' %}" class="btn btn-simple">My Inventory</a>
       {% endif %}
     </p>
   </div>
@@ -24,22 +24,7 @@
   <div class="container">
     <div class="row">
       {% for game in game_list %}
-        <a class="col-md-4 popout" href="{% url 'games:game' pk=game.pk %}" style="text-decoration: none; color: inherit;">
-          <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <h4 class="card-text">{{ game.title }}</h4>
-                </div>
-                <div>
-                  <p class="text-muted">{{ game.price }} €</p>
-                </div>
-              </div>
-              <p class="card-text">{{ game.description }}</p>
-            </div>
-          </div>
-        </a>
+        {% include "gamestore/game_card.html" %}
       {% endfor %}
       {% if user.is_authenticated and game.publisher == user %}
         <a href="{% url 'games:delete' pk=game.pk %}" title="delete" class="btn btn-simple">

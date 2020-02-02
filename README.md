@@ -66,4 +66,11 @@ Below is a brief estimation of the overall schedule:
  
 -------------------------------------------------------------------------------------------------------------------------------
 
+DEVELOPER NOTES
+
+How to get rid of "Class has no objects member" error caused by pylint
+1. pip install pylint-django
+2. In VSC go to settings (File > Preferences > Settings > Extensions > Django configuration and open json file)
+3. Insert {"python.linting.pylintArgs": ["--load-plugins=pylint_django"],}
+
 

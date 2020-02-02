@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.contrib import messages
-from . import models
+from gamestore.models import (Game, Purchase)
 from hashlib import md5
 # pip install django-braces
 from braces.views import SelectRelatedMixin
@@ -15,25 +15,24 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class HomeView(ListView):
-   model = models.Game
+   model = Game
    template_name = 'gamestore/home.html'
 
 class GameView(DetailView):
-   model = models.Game
+   model = Game
    template_name = 'gamestore/game_view.html'
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
-      purchase_model = models.Purchase
 
-      if models.Purchase.objects.filter(game__id=self.kwargs['pk'], player=self.request.user):
-         context["owned_game"] = True
+      if Purchase.objects.filter(game__id=self.kwargs['pk'], player=self.request.user, purchase_complete=True).exists():
+         context["purchased_game"] = True
       else:
-         context["owned_game"] = False
+         context["purchased_game"] = False
       return context
 
-class UserInventory(ListView):
-   model = models.Game
+class UserInventory(LoginRequiredMixin, ListView):
+   model = Game
    template_name = "gamestore/inventory.html"
 
    def get_queryset(self):
@@ -52,8 +51,8 @@ class UserInventory(ListView):
       context["game_publisher"] = self.game_publisher 
       return context
 
-class PurchasedGames(ListView):
-   model = models.Purchase
+class PurchasedGames(LoginRequiredMixin, ListView):
+   model = Purchase
    template_name = 'gamestore/my_games.html'
 
    def get_queryset(self):
@@ -62,7 +61,7 @@ class PurchasedGames(ListView):
 
 class PublishGame(LoginRequiredMixin, CreateView):
    fields = ('title', 'price', 'description', 'url')
-   model = models.Game
+   model = Game
 
    def form_valid(self, form):
       self.object = form.save(commit=False)
@@ -71,7 +70,7 @@ class PublishGame(LoginRequiredMixin, CreateView):
       return super().form_valid(form)
 
 class DeleteGame(LoginRequiredMixin, SelectRelatedMixin, DeleteView):
-   model = models.Game
+   model = Game
    success_url = reverse_lazy("games:home")
    select_related = ("publisher",)
 
@@ -88,7 +87,7 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
-      game = models.Game.objects.get(id=self.kwargs['game_id'])
+      game = Game.objects.get(id=self.kwargs['game_id'])
       payment_id = uuid.uuid1()
 
       checksumstr = "pid={pid}&sid={sid}&amount={amount}&token={secret}".format(
@@ -99,7 +98,12 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       )
 
       checksum = md5(checksumstr.encode('utf-8')).hexdigest()
-      new_purchase = models.Purchase(pid=payment_id, player=self.request.user, game=game)
+      failed_purchase = Purchase.objects.filter(player=self.request.user, game=game)
+
+      if failed_purchase.exists():
+         failed_purchase.delete()
+
+      new_purchase = Purchase(pid=payment_id, player=self.request.user, game=game)
       new_purchase.save()
 
       context["checksum"] = checksum
@@ -107,26 +111,40 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       context['game'] = game
       return context
 
-class SuccessView(TemplateView):
+class SuccessView(LoginRequiredMixin, TemplateView):
    template_name = 'purchase/error.html'
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       pid = self.request.GET.get('pid')
       status = self.request.GET.get('result')
-      purchase_data = models.Purchase.objects.get(pid=pid)
+      purchase_data = Purchase.objects.get(pid=pid)
 
       if status == 'success':
-         print('TRUE')
+         purchase_data.purchase_complete=True
+         purchase_data.save()
          self.template_name = 'purchase/success.html'
       else:
-         print('FALSE')
          purchase_data.delete()
       return context
 
-class CancelView(TemplateView):
+class CancelView(LoginRequiredMixin, TemplateView):
    template_name = 'purchase/cancel.html'
 
-class ErrorView(TemplateView):
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      pid = self.request.GET.get('pid')
+      purchase_data = Purchase.objects.get(pid=pid)
+      purchase_data.delete()
+      return context
+
+class ErrorView(LoginRequiredMixin, TemplateView):
    template_name = 'purchase/error.html'
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      pid = self.request.GET.get('pid')
+      purchase_data = Purchase.objects.get(pid=pid)
+      purchase_data.delete()
+      return context
    
