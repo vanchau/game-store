@@ -23,6 +23,7 @@ class Purchase(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     purchased_time = models.DateTimeField(auto_now_add=True)
+    purchase_complete = models.BooleanField(default=False)
     # checksum = models.CharField(max_length=32, editable=False)
 
 class Score(models.Model):

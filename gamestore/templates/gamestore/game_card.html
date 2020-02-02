@@ -13,11 +13,9 @@
           <p class="text-muted">{{ game.price }} €</p>
         </div>
       </div>
-      <button class="btn btn-primary btn-info">See description</button>
-      {% if user.is_authenticated and game.publisher == user %}
-        <button class="btn btn-primary btn-large">Modify</button>
-        <button class="btn btn-danger btn-large">Delete</button>
-      {% endif %}
+      <div style="color: grey">
+        Added: {{ game.published_date }}
+      </div>
     </div>
   </div>
 </a>
