@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container" style="min-height: 85vh;">
+  <div class="row px-4 pb-3">
+    <h1>{{ game_title }}: sales data</h1>
+  </div>
+  <div class="row px-4 pb-3">
+    <h5>Purchase count: {{ purchase_total_count }}&emsp;&emsp;Total revenue: {{ revenue }}€</h5>
+  </div>
+  <ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" width="10%">#</th>
+          <th scope="col" width="30%">Purchase date</th>
+          <th scope="col" width="30%">Amount</th>
+          <th scope="col" width="30%">Payment complete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for purchase in object_list %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ purchase.purchased_time }}</td>
+            <td>{{ purchase.paid_price }}€</td>
+            <td>{{ purchase.purchase_complete }}</td>
+          </tr>
+        {% endfor %}      
+      </tbody>
+    </table>
+  </ul>
+</div>
+{% endblock %}

@@ -14,5 +14,6 @@ urlpatterns = [
     path('purchase/<int:game_id>', views.PurchaseGame.as_view(), name='purchase'),
     path('purchase/success', views.SuccessView.as_view(), name='success'),
     path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
-    path('purchase/error', views.ErrorView.as_view(), name='error')
+    path('purchase/error', views.ErrorView.as_view(), name='error'),
+    path('statistics/<int:pk>', views.StatisticsView.as_view(), name='statistics')
 ]

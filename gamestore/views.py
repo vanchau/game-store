@@ -51,6 +51,27 @@ class UserInventory(LoginRequiredMixin, ListView):
       context["game_publisher"] = self.game_publisher 
       return context
 
+class StatisticsView(LoginRequiredMixin, SelectRelatedMixin, ListView):
+   model = Purchase
+   template_name = "gamestore/statistics.html"
+
+   def get_queryset(self, **kwargs):
+      purchases = self.model.objects.filter(game__id=self.kwargs['pk'], purchase_complete=True)
+      queryset = purchases
+      return queryset
+   
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      purchases = self.model.objects.filter(game__id=self.kwargs['pk'], purchase_complete=True)
+      context["purchase_total_count"] = purchases.count()
+      sum = 0
+      if purchases.count() > 0:
+         for purchase in purchases:
+            sum = sum + purchase.paid_price
+      context["revenue"] = sum
+      context["game_title"] = Game.objects.get(id=self.kwargs['pk']).title
+      return context
+
 class PurchasedGames(LoginRequiredMixin, ListView):
    model = Purchase
    template_name = 'gamestore/my_games.html'
@@ -108,7 +129,7 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       if failed_purchase.exists():
          failed_purchase.delete()
 
-      new_purchase = Purchase(pid=payment_id, player=self.request.user, game=game)
+      new_purchase = Purchase(pid=payment_id, player=self.request.user, game=game, paid_price=game.price)
       new_purchase.save()
 
       context["checksum"] = checksum
