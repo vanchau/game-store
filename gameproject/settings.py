@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gamestore',
     'bootstrap4',
-    'accounts',
-    'payment'
+    'accounts'
 ]
 
 MIDDLEWARE = [
