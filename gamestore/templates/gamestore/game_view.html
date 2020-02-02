@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class="container" style="min-height: 85vh;">
+
   <div class="row px-4">
     <h3>{{ game.title }}</h3><br/>
   </div>
@@ -12,23 +13,31 @@
   <div class="row px-4">
     <p>Game description: {{ game.description }}</p>
   </div>
+
   {% if user.is_authenticated and game.publisher != user and not purchased_game %}
     <div class="row px-4">
       <a href="{% url 'games:purchase' game_id=game.pk %}" title="purchase" class="btn btn-primary">
-        <span>Purchase game</span>
+        <span>Purchase game!</span>
+      </a>
+    </div>
+  {% elif user.is_authenticated and purchased_game or game.publisher == user %}
+    <div class="row pt-2 pl-4 w-100">
+      <iframe src="{{ game.url }}" style="height: 50vh; width: 180vw;"></iframe>
+    </div>
+  {% endif %}
+
+  {% if user.is_authenticated and game.publisher == user %}
+    <div>
+      <a href="{% url 'games:update' pk=game.pk %}" title="update" class="btn btn-simple">
+        <span class="fa fa-pencil" aria-hidden="true"></span>
+        <span class="icon-label">Edit</span>
+      </a>
+      <a href="{% url 'games:delete' pk=game.pk %}" title="delete" class="btn btn-simple">
+        <span class="fa fa-remove text-danger" aria-hidden="true"></span>
+        <span class="text-danger icon-label">Delete</span>
       </a>
     </div>
   {% endif %}
-  <div class="row pt-2 pl-4 w-100">
-    <iframe src="{{ game.url }}" style="height: 50vh; width: 180vw;"></iframe>
-  </div>
-  <div>
-    {% if user.is_authenticated and game.publisher == user and not hide_delete %}
-      <a href="{% url 'games:delete' pk=game.pk %}" title="delete" class="btn btn-simple">
-        <span class="fa fa-remove text-danger" aria-hidden="true"></span>
-        <span class="text-danger icon-label">Delete game</span>
-      </a>
-    {% endif %}
-  </div>
+
 </div>
 {% endblock %}

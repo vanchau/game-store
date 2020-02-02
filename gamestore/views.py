@@ -82,6 +82,11 @@ class DeleteGame(LoginRequiredMixin, SelectRelatedMixin, DeleteView):
       messages.success(self.request, "Game Deleted")
       return super().delete(*args, **kwargs)
 
+class UpdateGame(LoginRequiredMixin, UpdateView):
+   model = Game
+   fields = ['title', 'price', 'description', 'url']
+   template_name = 'gamestore/game_update_form.html'
+
 class PurchaseGame(LoginRequiredMixin, TemplateView):
    template_name = 'gamestore/purchase_form.html'
 
