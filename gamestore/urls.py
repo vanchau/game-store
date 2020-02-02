@@ -10,6 +10,7 @@ urlpatterns = [
     path('new', views.PublishGame.as_view(), name='publish'),
     path('my-games', views.PurchasedGames.as_view(), name='purchased'),
     path('delete/<int:pk>', views.DeleteGame.as_view(), name='delete'),
+    path('update/<int:pk>', views.UpdateGame.as_view(), name='update'),
     path('purchase/<int:game_id>', views.PurchaseGame.as_view(), name='purchase'),
     path('purchase/success', views.SuccessView.as_view(), name='success'),
     path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
