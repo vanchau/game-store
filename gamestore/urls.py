@@ -11,4 +11,7 @@ urlpatterns = [
     path('my-games', views.PurchasedGames.as_view(), name='purchased'),
     path('delete/<int:pk>', views.DeleteGame.as_view(), name='delete'),
     path('purchase/<int:game_id>', views.PurchaseGame.as_view(), name='purchase'),
+    path('purchase/success', views.SuccessView.as_view(), name='success'),
+    path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
+    path('purchase/error', views.ErrorView.as_view(), name='error')
 ]

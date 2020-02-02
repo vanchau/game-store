@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+import uuid
 
 User = get_user_model()
 
@@ -18,9 +19,11 @@ class Game(models.Model):
         return reverse("games:game", kwargs={ "pk": self.pk })
 
 class Purchase(models.Model):
+    pid = models.UUIDField(primary_key=True, editable=False)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     purchased_time = models.DateTimeField(auto_now_add=True)
+    # checksum = models.CharField(max_length=32, editable=False)
 
 class Score(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
