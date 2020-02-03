@@ -19,11 +19,11 @@ Our plan is to implement all the mandatory features including authentication, ba
  
 Brief description of each feature (how we plan to implement)
 
-Authentication → Authentication (login, logout, sign up) will be done using Django auth. This will allow user creation (players and developers) as well as permission handling. If there is enough time, email feature will be added using Django’s mail module.
+Authentication → Authentication (login, logout, sign up) will be done using Django auth. The role of a player and a developer will not be differentiated, meaning that there won't be separate accounts for the two roles. All users can thus be both player and developer, depending on how they want to use the service. If there is enough time, email feature will be added using Django’s mail module.
 
-Basic player functionalities → Players will only have the rights to play the games that they have purchased -- permissions will be stored in the database.  For purchasing the games, the mockup payment service offered by the course will be used. Players can find games by scrolling down the list of games in the home page, or (if there is the time to implement) look for specific ones via search bar.
+Basic player functionalities → Players will only have the rights to play the games that they have purchased -- this will be done via a Purchase model, which instances will tell who have paid for which games. For actual process of purchasing, the mockup payment service offered by the course will be used. Players will be able to find games by scrolling down the games list in the home page, or (if there is time to implement) by searching for specific ones via a search bar.
 
-Basic developer functionalities → Developer functionalities will contain components such as the ability to add games and managing the games in the developer’s inventory. The database will provide sales statistics as well as a list of games developed by the users, and restrict requests so that only the developer of the games can make changes to the games/inventory.
+Basic developer functionalities → Developer functionalities will contain components such as the ability to add games and managing the games in the developer’s inventory. The database will provide sales statistics as well as a list of games developed by the users, and restrict access so that only the developer/publisher of a game can edit, delete, or view sales info.
 
 Game/service interaction → All communication between the game and the service will be handled via the window.postMessage() method, which will enable sending messages between the two platforms.
 
@@ -31,13 +31,24 @@ Save/load feature → The save/load feature can be implemented by saving all the
 
 RESTful API → RESTful API will be used for accessing the database, be it for the purpose of purchasing games, retrieving saved game data, logging in to the service, etc.
 
+-----------------------------------------------------------------------------------------------------
+--------------------------
+ 
+**GENERAL ARCHITECTURE**
+
+Django project: gameproject
+Core of the entire system. Contains essential files such as settings.py and urls.py.
+
+Django applications: gamestore and accounts. "Accounts" contains views and templates relevant to the authentication process. Gamestore is the meat and potatoes of the entire game service - this is where all the central models, views, and templates, are defined.
+
+
 -------------------------------------------------------------------------------------------------------------------------------
  
 **MODELS AND VIEWS**
  
-The project will have three models altogether: Player, Developer, and Game. Since Django’s User model provides the fields username, password, email, first_name, and last_name, the Player model can be created by extending the User model, and the Developer model from the Player model, thus allowing the developer to also have the role of a player. The Player model can have additional fields such as purchased_games and saved_games, and the Developer model created_games. The Game model will have the fields developer, price, on_sale, url, and scores. 
+The project will have three custom models in addition to the User model provided by Django: Game, Purchase, and Score models. Since Django’s User model provides all the necessary fields such as  username, password, and email, we concluded it not necessary to create an augmented User model for the purpose of this game service, although that was the original plan. The Purchase model will contain all information relevant to the context of game purchasing: price, game id, player id, pid (pk), purchased time, and purchased status. Score model will contain fields such as player id, game id, score, etc.
  
-As for views, there will be home, game, my_games, store, statistics, and login, to begin with. Home view will serve as the home page of the service, displaying popular games and high scores. In game view a player can play games they have purchased, whereas my_games will display a list of games that a player has purchased. Statistics view will display sales statistics of the games to the developers, and store view will display all the games available for a player to purchase. Finally, there will also need to be some form of a login view to handle user registration, login, and logout features. 
+As for views, there will be home, game_view, my_games, statistics, and login, to begin with. Home view will serve as the home page of the service, displaying popular games and high scores. In game_view, a player can view game details or play depending on whether they have purchased the game or not. my_games will display a list of games that a player has purchased. Statistics view will display sales statistics of the games to the developers. Finally, there will also need to be some form of a login view to handle user registration, login, and logout features. 
  
 -------------------------------------------------------------------------------------------------------------------------------
  
@@ -63,7 +74,73 @@ Below is a brief estimation of the overall schedule:
 
 8.2-14.2 Updating project plan and documentation for submission
 
+-------------------------------------------------------------------------------------------------------------------------------
  
+**IMPLEMENTED FEATURES**
+
+X = completed
+O = under implementation
+_ = pending
+
+AUTHENTICATION (mandatory)
+
+X login, logout, and sign up
+_ email validation
+
+BASIC PLAYER FUNCTIONALITIES (mandatory)
+
+X purchase games with mockup payment service
+X users can play games
+X players are only allowed to play games they have purchased
+_ search functionality (how users can find games)
+
+BASIC DEVELOPER FUNCTIONALITIES (mandatory)
+
+X Add game URL, set price, and manage game (remove, modify)
+X Basic game inventory and sales statistics 
+X Developers are only allowed to modify/add/etc. their own games 
+
+GAME/SERVICE INTERACTION (mandatory)
+
+_ Save player's scores and display global high scores 
+_ Messages from service to the game
+
+QUALITY OF WORK (mandatory)
+
+O Comments, architecture
+_ Purposeful use of framework (DRY principle, Model-View-Template separation)
+O User experience (styling, interaction)
+_ Testing
+
+NON-FUNCTIONAL REQUIREMENTS (mandatory)
+
+O Project plan
+O Overall documentation, demo, teamwork, project management
+
+SAVE/LOAD AND RESOLUTION FEATURE (optional)
+
+_ The game supports saving/loading of the games with simple message protocol
+
+3RD PARTY LOGIN (optional)
+
+_ Support for OpenID, gmail, or Facebook login
+
+RESTFUL API (optional)
+
+_ Design and implementation of RESTful API to the service
+
+OWN GAME (optional)
+
+_ Simple game in JavaScript that communicated with the service
+
+MOBILE FRIENDLY (optional)
+
+U Usability on both traditional computers and mobile devices
+
+SOCIAL MEDIA SHARING (optional)
+
+_ Enable sharing games in social media site (Facebook, Twitter, Google+, etc.)
+
 -------------------------------------------------------------------------------------------------------------------------------
 
 DEVELOPER NOTES
