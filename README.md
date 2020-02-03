@@ -143,11 +143,16 @@ _ Enable sharing games in social media site (Facebook, Twitter, Google+, etc.)
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-DEVELOPER NOTES
+**DEVELOPER NOTES**
 
 How to get rid of "Class has no objects member" error caused by pylint
 1. pip install pylint-django
 2. In VSC go to settings (File > Preferences > Settings > Extensions > Django configuration and open json file)
 3. Insert {"python.linting.pylintArgs": ["--load-plugins=pylint_django"],}
 
-
+How to run the project locally
+1. Clone the project to your computer
+2. Create python virtual environment and install Django (remember to update pip)
+3. Install dependencies from requirements.txt with the command "pip install -r requirements.txt"
+4. Migrate models ("python manage.py migrate", you might have to first run the command makemigration)
+5. Run local server with the command "python manage.py runserver"
