@@ -26,7 +26,12 @@ class GameView(DetailView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       # Check if a completed purchase instance exists for this particular game and the user. 
-      if Purchase.objects.filter(game__id=self.kwargs['pk'], player=self.request.user, purchase_complete=True).exists():
+      if (self.request.user.is_authenticated and
+         Purchase.objects.filter(
+            game__id=self.kwargs['pk'],
+            player=self.request.user,
+            purchase_complete=True
+         ).exists()):
          context["purchased_game"] = True
       else:
          context["purchased_game"] = False
