@@ -102,8 +102,8 @@ X Developers are only allowed to modify/add/etc. their own games
 
 GAME/SERVICE INTERACTION (mandatory)
 
-_ Save player's scores and display global high scores 
-_ Messages from service to the game
+O Save player's scores and display global high scores 
+O Messages from service to the game
 
 QUALITY OF WORK (mandatory)
 
