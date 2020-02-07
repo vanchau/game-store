@@ -1,7 +1,24 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
+<script src="{% static 'gamestore/jquery-3.2.1.min.js' %}"></script>
+<script>
+  /* global $ */
+  alert("testitesti1");
+  $(document).ready(function() {
+    'use strict';
+    $(window).on('message', function(event) {
+      //Note that messages from all origins are accepted
+      //Get data from sent message
+      var message = event.originalEvent.data;
+      alert(message.messageType);
+      alert(message.gameState);
+    });
+  });
+  </script>
+
 <div class="container" style="min-height: 85vh;">
 
   <div class="row px-4">
@@ -14,7 +31,7 @@
     <p>Game description: {{ game.description }}</p>
   </div>
 
-  {% if user.is_authenticated and game.publisher != user and not purchased_game %}
+  {% if game.publisher != user and not purchased_game %}
     <div class="row px-4">
       <a href="{% url 'games:purchase' game_id=game.pk %}" title="purchase" class="btn btn-primary">
         <span>Purchase game!</span>
