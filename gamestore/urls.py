@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls import url
 from . import views
 
 app_name = 'games'
@@ -17,5 +16,5 @@ urlpatterns = [
     path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
     path('purchase/error', views.ErrorView.as_view(), name='error'),
     path('statistics/<int:pk>', views.StatisticsView.as_view(), name='statistics'),
-    path('score', views.score, name='score')
+    path('submit-score', views.submit_score, name='submit-score')
 ]

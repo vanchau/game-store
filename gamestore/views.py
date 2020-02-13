@@ -19,6 +19,7 @@ class HomeView(ListView):
    model = Game
    template_name = 'gamestore/home.html'
 
+
 # Game view. Users can (depending on their role) modify, delete, play, or purchase games.
 class GameView(DetailView):
    model = Game
@@ -192,7 +193,7 @@ class ErrorView(LoginRequiredMixin, TemplateView):
       return context
 
 # Save submitted score to database
-def score(request):
+def submit_score(request):
    score = request.GET['score']
    game = Game.objects.get(id=request.GET['gameId'])
 

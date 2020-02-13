@@ -24,7 +24,7 @@
       else if (message.messageType === 'SCORE'){ 
         message.gameId = {{ game.id }}
         $.ajax({
-          url:'score',
+          url:'submit-score',
           data: message,
           dataType: 'json'
         });
