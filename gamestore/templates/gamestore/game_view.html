@@ -68,25 +68,51 @@
   {% endif %}
 
   <div class="row px-4">
-    <h3 class="mb-3 mt-5">High Scores</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Player</th>
-        <th scope="col">Score</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for score in scores %}
-    <tr>
-      <th scope="row">{{forloop.counter}}</th>
-      <td>{{score.player}}</td>
-      <td>{{score.score}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-  </table>
+    <h3 class="mb-3 mt-5">Top 5 Scores</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Player</th>
+          <th scope="col">Score</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for score in top_scores %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{score.player}}</td>
+          <td>{{score.score}}</td>
+          <td>{{score.play_time}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row px-4">
+    <h3 class="mb-3 mt-5">Own Scores</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Player</th>
+          <th scope="col">Score</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for score in own_scores %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{score.player}}</td>
+          <td>{{score.score}}</td>
+          <td>{{score.play_time}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
 </div>

@@ -37,7 +37,8 @@ class GameView(DetailView):
       else:
          context["purchased_game"] = False
 
-      context["scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')
+      context["top_scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')[:5]
+      context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
 
       return context
 
