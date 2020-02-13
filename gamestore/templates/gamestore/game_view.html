@@ -61,10 +61,7 @@
     <p>Game description: {{ game.description }}</p>
   </div>
 
-<<<<<<< HEAD
   <!-- Not owned: Hide game and show buy button -->
-=======
->>>>>>> master
   {% if game.publisher != user and not purchased_game %}
     <div class="row px-4">
       <a href="{% url 'games:purchase' game_id=game.pk %}" title="purchase" class="btn btn-primary">
