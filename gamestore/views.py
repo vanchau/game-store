@@ -19,6 +19,10 @@ class HomeView(ListView):
    model = Game
    template_name = 'gamestore/home.html'
 
+   #def get_queryset(self):
+   #   queryset = Game.objects.filter(game_title__contains(searchQuery))
+   #   return queryset
+
 
 # Game view. Users can (depending on their role) modify, delete, play, or purchase games.
 class GameView(DetailView):
