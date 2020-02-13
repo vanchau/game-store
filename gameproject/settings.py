@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,8 +20,19 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
+def get_env_variable(name):
+    try:
+        return os.environ[name]
+    except KeyError:
+      raise ImproperlyConfigured("Environment variable “%s” not found." % name)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-*k4ac_ifd8#dd!jat=y=dt*xm4q@bvon@_c$_xt*6uq5=!&d&'
+
+# secret token for payment service
+SECRET_TOKEN = get_env_variable('SECRET_TOKEN')
+# seller id for payment service
+SELLER_ID = get_env_variable('SELLER_ID')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.http import (Http404, HttpResponse)
 from django.contrib import messages
 from gamestore.models import (Game, Purchase, Score)
+from django.conf import settings
 from hashlib import md5
 from braces.views import SelectRelatedMixin
 import uuid
@@ -155,9 +156,9 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       # Generate the checksum string before applying md5 hashing.
       checksumstr = "pid={pid}&sid={sid}&amount={amount}&token={secret}".format(
          pid=payment_id,
-         sid='lwUGtWdhbWVzY29wZQ==',
+         sid=settings.SELLER_ID,
          amount=game.price,
-         secret='DleOGf86zXN40AajmCR4Q8vZVYkA'
+         secret=settings.SECRET_TOKEN
       )
 
       checksum = md5(checksumstr.encode('utf-8')).hexdigest()
