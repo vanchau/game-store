@@ -92,7 +92,7 @@ BASIC PLAYER FUNCTIONALITIES (mandatory)
 X purchase games with mockup payment service
 X users can play games
 X players are only allowed to play games they have purchased
-_ search functionality (how users can find games)
+X search functionality (how users can find games)
 
 BASIC DEVELOPER FUNCTIONALITIES (mandatory)
 
@@ -102,15 +102,15 @@ X Developers are only allowed to modify/add/etc. their own games
 
 GAME/SERVICE INTERACTION (mandatory)
 
-O Save player's scores and display global high scores 
-O Messages from service to the game
+X Save player's scores and display global high scores 
+X Messages from service to the game
 
 QUALITY OF WORK (mandatory)
 
 O Comments, architecture
 _ Purposeful use of framework (DRY principle, Model-View-Template separation)
 O User experience (styling, interaction)
-_ Testing
+X Testing (manual is enough -Piazza)
 
 NON-FUNCTIONAL REQUIREMENTS (mandatory)
 
@@ -135,7 +135,7 @@ _ Simple game in JavaScript that communicated with the service
 
 MOBILE FRIENDLY (optional)
 
-U Usability on both traditional computers and mobile devices
+X Usability on both traditional computers and mobile devices
 
 SOCIAL MEDIA SHARING (optional)
 
