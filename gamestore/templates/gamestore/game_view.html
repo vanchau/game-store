@@ -48,13 +48,26 @@
     <div class="row pt-2 pl-4 w-100">
       <iframe src="{{ game.url }}" style="height: 50vh; width: 180vw;"></iframe>
     </div>
-    <p class="row pt-2 pl-4 w-100">High Scores</p>
-    <div class="col pt-2 pl-4 w-100">
+    <div class="row px-4">
+      <h3>High Scores</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Player</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
       {% for score in scores %}
-      <li>{{score.player}} {{score.score}}</li>
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{score.player}}</td>
+        <td>{{score.score}}</td>
+      </tr>
       {% endfor %}
+    </tbody>
     </div>
-
   {% endif %}
 
   {% if user.is_authenticated and game.publisher == user %}
