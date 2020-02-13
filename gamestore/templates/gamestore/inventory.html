@@ -23,7 +23,6 @@
   <div class="container">
     <div class="row d-flex justify-content-end my-5">
       <form class="form-inline" method="GET" action="{% url 'games:inventory' %}" id="searchQuery">
-        {% csrf_token %}
         <input class="form-control mr-sm-2" type=text name="q"></input>
         <input class="btn btn-primary" type=submit value="Search"></input>
       </form>
