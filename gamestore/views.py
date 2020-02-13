@@ -98,13 +98,15 @@ class PurchasedGames(LoginRequiredMixin, ListView):
    template_name = 'gamestore/my_games.html'
 
    def get_queryset(self):
-      purchased_games = self.model.objects.filter(player=self.request.user).select_related('game')
+      purchases = self.model.objects.filter(player=self.request.user).select_related('game')
       query = self.request.GET.get('q')
+
+      print(purchases)
       
       if query:
-         queryset = purchased_games.filter(title__icontains=query)
+         queryset = purchases.filter(game__title__icontains=query)
       else:
-         queryset = purchased_games
+         queryset = purchases
       return queryset
 
 
