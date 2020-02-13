@@ -20,8 +20,8 @@
 {% block game_content %}
 <div class="album py-5" id="browse">
   <div class="container">
-    <div class="row px-3 my-5">
-      <form class="form-inline mr-auto" method="GET" action="{% url 'games:purchased' %}" id="searchQuery">
+    <div class="row d-flex justify-content-end my-5">
+      <form class="form-inline" method="GET" action="{% url 'games:purchased' %}" id="searchQuery">
         {% csrf_token %}
         <input class="form-control mr-sm-2" type=text name="q"></input>
         <input class="btn btn-primary" type=submit value="Search"></input>
