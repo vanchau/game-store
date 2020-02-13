@@ -3,12 +3,13 @@ from django.views.generic import (View, TemplateView, ListView, DetailView,
                                  CreateView, DeleteView, UpdateView, FormView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.http import Http404
+from django.http import (Http404, HttpResponse)
 from django.contrib import messages
-from gamestore.models import (Game, Purchase)
+from gamestore.models import (Game, Purchase, Score)
 from hashlib import md5
 from braces.views import SelectRelatedMixin
 import uuid
+
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -35,6 +36,9 @@ class GameView(DetailView):
          context["purchased_game"] = True
       else:
          context["purchased_game"] = False
+      
+      context["scores"] = Score.objects.filter(game__id=self.kwargs['pk'])
+
       return context
 
 # Inventory view. Developers can quickly access their games here.
@@ -185,4 +189,13 @@ class ErrorView(LoginRequiredMixin, TemplateView):
       purchase_data = Purchase.objects.get(pid=pid)
       purchase_data.delete()
       return context
-   
+
+def score(request):
+   score = request.GET['score']
+   game = Game.objects.get(id=request.GET['gameId'])
+
+   # Create a new score instance.
+   new_score = Score(player=request.user, game=game, score=score)
+   new_score.save()
+
+   return HttpResponse(status=204)

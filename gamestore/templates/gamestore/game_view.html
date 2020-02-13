@@ -2,23 +2,30 @@
 {% load bootstrap4 %}
 {% load static %}
 
-{% block content %}
-<script src="{% static 'gamestore/jquery-3.2.1.min.js' %}"></script>
+{% block javascript %}
 <script>
-  /* global $ */
-  alert("testitesti1");
   $(document).ready(function() {
     'use strict';
     $(window).on('message', function(event) {
       //Note that messages from all origins are accepted
       //Get data from sent message
-      var message = event.originalEvent.data;
-      alert(message.messageType);
-      alert(message.gameState);
+      let message = event.originalEvent.data;
+      message.gameId = {{ game.id }}
+
+      if (message.messageType === 'SCORE'){ 
+        $.ajax({
+          url:'/ajax/score/',
+          data: message,
+          dataType: 'json'
+        });
+      }
+
     });
   });
   </script>
+{% endblock %}
 
+{% block content %}
 <div class="container" style="min-height: 85vh;">
 
   <div class="row px-4">
@@ -41,6 +48,13 @@
     <div class="row pt-2 pl-4 w-100">
       <iframe src="{{ game.url }}" style="height: 50vh; width: 180vw;"></iframe>
     </div>
+    <p class="row pt-2 pl-4 w-100">High Scores</p>
+    <div class="col pt-2 pl-4 w-100">
+      {% for score in scores %}
+      <li>{{score.player}} {{score.score}}</li>
+      {% endfor %}
+    </div>
+
   {% endif %}
 
   {% if user.is_authenticated and game.publisher == user %}
