@@ -17,5 +17,5 @@ urlpatterns = [
     path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
     path('purchase/error', views.ErrorView.as_view(), name='error'),
     path('statistics/<int:pk>', views.StatisticsView.as_view(), name='statistics'),
-    url(r'^ajax/score/$', views.score, name='score')
+    path('score', views.score, name='score')
 ]

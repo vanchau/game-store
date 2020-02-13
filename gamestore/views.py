@@ -191,6 +191,7 @@ class ErrorView(LoginRequiredMixin, TemplateView):
       purchase_data.delete()
       return context
 
+# Save submitted score to database
 def score(request):
    score = request.GET['score']
    game = Game.objects.get(id=request.GET['gameId'])
