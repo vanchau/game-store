@@ -28,11 +28,6 @@
           <img src="{% static 'gamestore/img/placeholder1.png' %}" width="20" height="20" ></img>
           <strong>Game Store</strong>
         </a>
-        <form class="form-inline mr-auto" method="POST" action="{% url 'games:home' %}" id="searchQuery">
-          {% csrf_token %}
-          <input class="form-control mr-sm-2" type=text></input>
-          <input class="btn btn-primary" type=submit value="Search"></input>
-        </form>
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
             <a class="nav-item nav-link" href="{% url 'games:publish' %}" class="btn btn-simple">Add Game</a>

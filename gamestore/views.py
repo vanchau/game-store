@@ -18,10 +18,14 @@ User = get_user_model()
 class HomeView(ListView):
    model = Game
    template_name = 'gamestore/home.html'
-
-   #def get_queryset(self):
-   #   queryset = Game.objects.filter(game_title__contains(searchQuery))
-   #   return queryset
+  
+   def get_queryset(self):
+      query = self.request.GET.get('q')
+      if query:
+         queryset = Game.objects.filter(title__icontains=query)
+      else:
+         queryset = Game.objects.all()
+      return queryset
 
 
 # Game view. Users can (depending on their role) modify, delete, play, or purchase games.
@@ -53,9 +57,16 @@ class UserInventory(LoginRequiredMixin, ListView):
    template_name = "gamestore/inventory.html"
 
    def get_queryset(self):
-      purchases = self.model.objects.filter(publisher_id=self.request.user.id)
-      queryset = purchases
+      published_games = self.model.objects.filter(publisher_id=self.request.user.id)
+      query = self.request.GET.get('q')
+
+      if query:
+         queryset = published_games.filter(title__icontains=query)
+      else:
+         queryset = published_games
       return queryset
+
+
 
 # Statistics view. Displays sale data such as paid price, purchased date, etc.
 class StatisticsView(LoginRequiredMixin, SelectRelatedMixin, ListView):
@@ -87,8 +98,15 @@ class PurchasedGames(LoginRequiredMixin, ListView):
    template_name = 'gamestore/my_games.html'
 
    def get_queryset(self):
-      queryset = self.model.objects.filter(player=self.request.user).select_related('game')
+      purchased_games = self.model.objects.filter(player=self.request.user).select_related('game')
+      query = self.request.GET.get('q')
+      
+      if query:
+         queryset = purchased_games.filter(title__icontains=query)
+      else:
+         queryset = purchased_games
       return queryset
+
 
 # View for uploading a new game instance. Uses the template game_form.html.
 class PublishGame(LoginRequiredMixin, CreateView):
