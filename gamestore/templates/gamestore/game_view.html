@@ -52,12 +52,18 @@
 
         let saved_game = "{{ saved_game }}"
         let game_state = "{{ saved_game.game_state|safe|escapejs }}"
-
-        game_state = JSON.parse(game_state)
-
-        let message = {messageType: 'LOAD', gameState: game_state }
         let window = $('#iframe')[0].contentWindow
-        window.postMessage(message, '*')
+        let message
+
+        if(!game_state){
+          message = {messageType: 'ERROR', info: "Save file not found" }
+        }
+        else{
+          game_state = JSON.parse(game_state)
+          message = {messageType: 'LOAD', gameState: game_state }
+        }
+      
+        window.postMessage(message, '*')  
       }
 
     });
