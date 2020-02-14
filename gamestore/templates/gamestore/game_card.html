@@ -1,9 +1,10 @@
 {% load static %}
 {% load bootstrap4 %}
+{% static "" as baseUrl %}
 
 <a class="col-md-4 popout" href="{% url 'games:game' pk=game.pk %}" style="text-decoration: none; color: inherit;">
   <div class="card mb-4 box-shadow">
-    <img class="card-img-top" src="{% static 'gamestore/img/placeholder.jpg' %}" alt="Card image cap">
+      <img class="card-img-top" src="{{baseUrl}}gamestore/img/{{game.category}}.png" alt="Card image cap">
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <div>
@@ -14,7 +15,7 @@
         </div>
       </div>
       <p style="color: grey">
-        Added: {{ game.published_date}}
+        Added: {{ game.published_date }}
       </p>
       <div style="color: grey">
         Category: {{ game.category }}

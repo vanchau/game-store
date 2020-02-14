@@ -21,3 +21,9 @@ html {
 ul {
   padding-left: 0
 }
+
+.game_card_image {
+  margin: 2;
+  height: 20%;
+  width: 20%;
+}
