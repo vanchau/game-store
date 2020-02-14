@@ -49,8 +49,11 @@ class GameView(DetailView):
          context["purchased_game"] = False
 
       context["top_scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')[:5]
-      context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
-      context["saved_game"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date').first()
+      
+      if(self.request.user.is_authenticated):
+         context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
+         context["saved_game"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date').first()
+      
 
       return context
 
