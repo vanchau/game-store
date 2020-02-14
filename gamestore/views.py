@@ -24,7 +24,7 @@ class HomeView(ListView):
    def get_queryset(self):
       query = self.request.GET.get('q')
       if query:
-         queryset = Game.objects.filter(title__icontains=query)
+         queryset = Game.objects.filter(title__icontains=query) | Game.objects.filter(category__icontains=query)
       else:
          queryset = Game.objects.all()
       return queryset
@@ -67,7 +67,7 @@ class UserInventory(LoginRequiredMixin, ListView):
       query = self.request.GET.get('q')
 
       if query:
-         queryset = published_games.filter(title__icontains=query)
+         queryset = published_games.filter(title__icontains=query) | published_games.filter(category__icontains=query)
       else:
          queryset = published_games
       return queryset
@@ -110,7 +110,7 @@ class PurchasedGames(LoginRequiredMixin, ListView):
       print(purchases)
       
       if query:
-         queryset = purchases.filter(game__title__icontains=query)
+         queryset = purchases.filter(game__title__icontains=query) | purchases.filter(game__category__icontains=query)
       else:
          queryset = purchases
       return queryset
@@ -119,7 +119,7 @@ class PurchasedGames(LoginRequiredMixin, ListView):
 # View for uploading a new game instance. Uses the template game_form.html.
 class PublishGame(LoginRequiredMixin, CreateView):
    # Fields to be displayed in the view.
-   fields = ('title', 'price', 'description', 'url')
+   fields = ('title', 'price', 'description', 'url', 'category')
    model = Game
 
    # Called when valid form data has been POSTed.
