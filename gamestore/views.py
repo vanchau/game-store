@@ -40,8 +40,8 @@ class GameView(DetailView):
       if (self.request.user.is_authenticated and
          Purchase.objects.filter(
             game__id=self.kwargs['pk'],
-            player=self.request.user,
-            purchase_complete=True
+            player=self.request.user
+            #purchase_complete=True
          ).exists()):
          context["purchased_game"] = True
       else:
