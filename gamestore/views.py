@@ -50,10 +50,9 @@ class GameView(DetailView):
 
       context["top_scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')[:5]
       
-      if(self.request.user.is_authenticated):
+      if self.request.user.is_authenticated:
          context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
          context["saved_game"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date').first()
-      
 
       return context
 
@@ -106,8 +105,6 @@ class PurchasedGames(LoginRequiredMixin, ListView):
    def get_queryset(self):
       purchases = self.model.objects.filter(player=self.request.user).select_related('game')
       query = self.request.GET.get('q')
-
-      print(purchases)
       
       if query:
          queryset = purchases.filter(game__title__icontains=query)
