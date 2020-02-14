@@ -16,5 +16,6 @@ urlpatterns = [
     path('purchase/cancel', views.CancelView.as_view(), name='cancel'),
     path('purchase/error', views.ErrorView.as_view(), name='error'),
     path('statistics/<int:pk>', views.StatisticsView.as_view(), name='statistics'),
-    path('submit-score', views.submit_score, name='submit-score')
+    path('submit-score', views.submit_score, name='submit-score'),
+    path('save-game', views.save_game, name='save-game')
 ]

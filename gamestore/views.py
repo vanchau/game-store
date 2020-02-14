@@ -5,9 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import (Http404, HttpResponse)
 from django.contrib import messages
-from gamestore.models import (Game, Purchase, Score)
+from gamestore.models import (Game, Purchase, Score, Save)
 from django.conf import settings
 from hashlib import md5
+import json
 from braces.views import SelectRelatedMixin
 import uuid
 
@@ -48,8 +49,10 @@ class GameView(DetailView):
          context["purchased_game"] = False
 
       context["top_scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')[:5]
+      
       if self.request.user.is_authenticated:
          context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
+         context["saved_game"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date').first()
 
       return context
 
@@ -226,3 +229,14 @@ def submit_score(request):
    new_score.save()
 
    return HttpResponse(status=204)
+
+# Save save data to database
+def save_game(request):
+   game_state = request.GET['gameState']
+   game = Game.objects.get(id=request.GET['gameId'])
+
+   # Create a new save instance.
+   new_save = Save(player=request.user, game=game, game_state=game_state)
+   new_save.save()
+
+   return HttpResponse(status=204)   

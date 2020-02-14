@@ -38,6 +38,16 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Save',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('save_date', models.DateTimeField(auto_now_add=True)),
+                ('game_state', models.TextField()),
+                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gamestore.Game')),
+                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Purchase',
             fields=[
                 ('pid', models.UUIDField(editable=False, primary_key=True, serialize=False)),
