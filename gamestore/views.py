@@ -164,8 +164,8 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       # Find if there is an incomplete (non-finalized) purchase instance.
       failed_purchase = Purchase.objects.filter(player=self.request.user, game=game, purchase_complete=False)
 
-      if failed_purchase.exists():
-         failed_purchase.delete()
+      #if failed_purchase.exists():
+      #   failed_purchase.delete()
 
       # Create a new purchase instance.
       new_purchase = Purchase(pid=payment_id, player=self.request.user, game=game, paid_price=game.price)
