@@ -50,7 +50,7 @@ class GameView(DetailView):
 
       context["top_scores"] = Score.objects.filter(game__id=self.kwargs['pk']).order_by('-score')[:5]
       context["own_scores"] = Score.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-score')
-      context["saves"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date')[:1]
+      context["saved_game"] = Save.objects.filter(game__id=self.kwargs['pk'], player=self.request.user).order_by('-save_date').first()
 
       return context
 

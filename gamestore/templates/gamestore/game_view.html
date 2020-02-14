@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block javascript %}
-<script>
+<script type="text/javascript">
   $(document).ready(function() {
     'use strict';
 
@@ -21,7 +21,7 @@
       }
 
       // Send submitted score to backend
-      if (message.messageType === 'SCORE'){ 
+      if (message.messageType === 'SCORE' && confirm("Are you sure you want to submit your score and reset the game?")){ 
         message.gameId = {{ game.id }}
         $.ajax({
           url:'submit-score',
@@ -29,28 +29,33 @@
           dataType: 'json'
         });
 
-        if (confirm("Score submitted!")){
-          window.location.reload()
-        }
-      }
-
-      // Send save data to backend
-      if (message.messageType === 'SAVE'){ 
-        message.gameId = {{ game.id }}
-        message.gameState = JSON.stringify(message.gameState)
+        window.location.reload()
         
+      }
+  
+      // Send save data to backend
+      if (message.messageType === 'SAVE' && confirm('Are you sure you want to save your game? If you have saved the game before, it will be overwritten.')){ 
+        message.gameId = {{ game.id }}
+
+        message.gameState = JSON.stringify(message.gameState)
+
         $.ajax({
           url:'save-game',
           data: message
         });
 
+        alert("Game saved!")
       }
 
       // Send error message to game when saving/loading (not implemented)
-      if (message.messageType === 'LOAD_REQUEST') {
-        let save = {{ save[0] }}
-        console.log(save)
-        let message = {messageType: 'LOAD', gameState: 'game_state' }
+      if (message.messageType === 'LOAD_REQUEST' && confirm('Are you sure you want to load the most recent save over your current game?')) {
+
+        let saved_game = "{{ saved_game }}"
+        let game_state = "{{ saved_game.game_state|safe|escapejs }}"
+
+        game_state = JSON.parse(game_state)
+
+        let message = {messageType: 'LOAD', gameState: game_state }
         let window = $('#iframe')[0].contentWindow
         window.postMessage(message, '*')
       }
