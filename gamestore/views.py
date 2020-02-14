@@ -40,8 +40,8 @@ class GameView(DetailView):
       if (self.request.user.is_authenticated and
          Purchase.objects.filter(
             game__id=self.kwargs['pk'],
-            player=self.request.user
-            #purchase_complete=True
+            player=self.request.user,
+            purchase_complete=True
          ).exists()):
          context["purchased_game"] = True
       else:
@@ -164,8 +164,8 @@ class PurchaseGame(LoginRequiredMixin, TemplateView):
       # Find if there is an incomplete (non-finalized) purchase instance.
       failed_purchase = Purchase.objects.filter(player=self.request.user, game=game, purchase_complete=False)
 
-      #if failed_purchase.exists():
-      #   failed_purchase.delete()
+      if failed_purchase.exists():
+         failed_purchase.delete()
 
       # Create a new purchase instance.
       new_purchase = Purchase(pid=payment_id, player=self.request.user, game=game, paid_price=game.price)
