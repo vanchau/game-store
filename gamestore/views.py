@@ -102,8 +102,6 @@ class PurchasedGames(LoginRequiredMixin, ListView):
    def get_queryset(self):
       purchases = self.model.objects.filter(player=self.request.user).select_related('game')
       query = self.request.GET.get('q')
-
-      print(purchases)
       
       if query:
          queryset = purchases.filter(game__title__icontains=query)
