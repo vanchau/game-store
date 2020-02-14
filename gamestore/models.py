@@ -36,6 +36,6 @@ class Score(models.Model):
 class Save(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-#    save_date = models.DateTimeField(auto_now_add=True)
+    save_date = models.DateTimeField(auto_now_add=True)
     game_state = models.TextField()
   
