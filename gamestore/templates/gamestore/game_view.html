@@ -121,6 +121,7 @@
   </div>
 
   <!-- All personal high scores -->
+  {% if user.is_authenticated %}
   <div class="row px-4">
     <h3 class="mb-3 mt-5">Own Scores</h3>
     <table class="table table-striped">
@@ -144,5 +145,6 @@
       </tbody>
     </table>
   </div>
+  {% endif %}
 </div>
 {% endblock %}
