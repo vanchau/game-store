@@ -144,6 +144,7 @@
     </table>
   </div>
 
+  {% if user.is_authenticated and purchased_game or game.publisher == user %}
   <!-- All personal high scores -->
   {% if user.is_authenticated %}
   <div class="row px-4">
