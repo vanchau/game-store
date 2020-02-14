@@ -132,14 +132,6 @@ Same points as in "Game/Service interaction".
 (1,2) The site runs well both on mobile and desktop due to Bootstrap. Looks nice and works nicely.  
 **--> Self-evaluation: 50 points**
 
-**Own game (0-100 points)**
-
-1. Develop a simple game in JavaScript that communicates with the service (at least high score, save, load) :heavy_check_mark:
-2. You can host the game as a static file in your Django project or elsewhere. But you should include it in your repository. :heavy_check_mark:
-
-(1,2) Own game (html file) added to root. Hosted elsewhere and url added to game store. Coded in a rush so
-quality is not the best but supports all required features. Game name "OWN GAME" in store.
-**--> Self-evaluation: 80 points**
 -------------------------------------------------------------------------------------------------------------------------------
 **WORK DIVISION**
 
