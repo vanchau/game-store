@@ -19,7 +19,7 @@ class Game(models.Model):
         return reverse("games:game", kwargs={ "pk": self.pk })
 
 class Purchase(models.Model):
-    pid = models.UUIDField(primary_key=True, editable=False)
+    pid = models.UUIDField(unique=True, editable=False)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     purchased_time = models.DateTimeField(auto_now_add=True)
