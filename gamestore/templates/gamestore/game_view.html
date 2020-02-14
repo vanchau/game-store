@@ -21,7 +21,7 @@
       }
 
       // Send submitted score to backend
-      else if (message.messageType === 'SCORE'){ 
+      if (message.messageType === 'SCORE'){ 
         message.gameId = {{ game.id }}
         $.ajax({
           url:'submit-score',
@@ -32,12 +32,25 @@
         if (confirm("Score submitted!")){
           window.location.reload()
         }
+      }
+
+      // Send save data to backend
+      if (message.messageType === 'SAVE'){ 
+        message.gameId = {{ game.id }}
+        message.gameState = JSON.stringify(message.gameState)
         
+        $.ajax({
+          url:'save-game',
+          data: message
+        });
+
       }
 
       // Send error message to game when saving/loading (not implemented)
-      else if (message.messageType === 'LOAD_REQUEST' || message.messageType === 'SAVE') {
-        let message = {messageType: "ERROR", info: "Not implemented" }
+      if (message.messageType === 'LOAD_REQUEST') {
+        let save = {{ save[0] }}
+        console.log(save)
+        let message = {messageType: 'LOAD', gameState: 'game_state' }
         let window = $('#iframe')[0].contentWindow
         window.postMessage(message, '*')
       }

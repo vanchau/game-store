@@ -32,3 +32,10 @@ class Score(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     play_time = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(editable=False)
+
+class Save(models.Model):
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    save_date = models.DateTimeField(auto_now_add=True)
+    game_state = models.TextField()
+  
