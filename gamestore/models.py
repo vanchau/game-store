@@ -6,6 +6,8 @@ import uuid
 
 User = get_user_model()
 
+# Contain information relevant to a game: game title, price, description,
+# creator (publisher), game url, category, etc.
 class Game(models.Model):
     CATEGORY_CHOICES = (
         ('Adventure','Adventure',),
@@ -26,6 +28,8 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse("games:game", kwargs={ "pk": self.pk })
 
+# Store purchase information whenever a game is bought or is about to be bought.
+# player info, purchased game, purchase status (True/False), paid price (used for statistics), etc. 
 class Purchase(models.Model):
     pid = models.UUIDField(primary_key=True, editable=False)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -35,12 +39,14 @@ class Purchase(models.Model):
     paid_price = models.PositiveSmallIntegerField(editable=False)
     # checksum = models.CharField(max_length=32, editable=False)
 
+# Store game scores produced by players.
 class Score(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     play_time = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(editable=False)
 
+# Store game data.
 class Save(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

@@ -56,7 +56,7 @@ class GameView(DetailView):
 
       return context
 
-# Inventory view. Developers can quickly access their games here.
+# Inventory view. Provides developers quick access to their games.
 class UserInventory(LoginRequiredMixin, ListView):
    model = Game
    template_name = "gamestore/inventory.html"
@@ -70,8 +70,6 @@ class UserInventory(LoginRequiredMixin, ListView):
       else:
          queryset = published_games
       return queryset
-
-
 
 # Statistics view. Displays sale data such as paid price, purchased date, etc.
 class StatisticsView(LoginRequiredMixin, SelectRelatedMixin, ListView):
@@ -111,7 +109,6 @@ class PurchasedGames(LoginRequiredMixin, ListView):
       else:
          queryset = purchases
       return queryset
-
 
 # View for uploading a new game instance. Uses the template game_form.html.
 class PublishGame(LoginRequiredMixin, CreateView):
